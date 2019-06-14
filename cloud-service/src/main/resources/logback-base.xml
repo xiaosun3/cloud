@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<included>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>> <!-- 可以指定多个 %d，但是只能有一个是主要的其它的 %d 占位符必须通过 'aux' 标记为辅助的 -->
+                /usr/local/dir_samba/HC_logs/${APP_NAME}/info/%d{yyyy-MM,aux}/%d{yyyy-MM-dd}.%i.log
+            </FileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="GATE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>
+                /usr/local/dir_samba/HC_logs/gate/%d{yyyy-MM,aux}/%d{yyyy-MM-dd}.%i.log
+            </FileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="EX" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>
+                /usr/local/dir_samba/HC_logs/${APP_NAME}/ex/%d{yyyy-MM,aux}/%d{yyyy-MM-dd}.%i.log
+            </FileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="exlog" level="INFO" additivity="false">
+        <springProfile name="de,te">
+            <appender-ref ref="CONSOLE"/>
+        </springProfile>
+        <appender-ref ref="EX"/>
+    </logger>
+
+    <logger name="gatelog" level="INFO" additivity="false">
+        <springProfile name="de,te">
+            <appender-ref ref="CONSOLE"/>
+        </springProfile>
+        <appender-ref ref="GATE"/>
+    </logger>
+
+    <logger name="com.wondersgroup" level="INFO" additivity="true">
+        <springProfile name="de,te">
+            <appender-ref ref="CONSOLE"/>
+        </springProfile>
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</included>
