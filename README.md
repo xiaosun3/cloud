@@ -1,11 +1,14 @@
 # cloud
 
 spring boot 2.+
+
 cloud-customer-api  --> websoket
                     --> rabbitmq 
                     
 cloud-elasticsearch --> elasticesearch
-cloud-gateway       --> gateway 
+
+cloud-gateway       --> gateway
+ 
 cloud-remote        --> nacos 配置中心
 
 
