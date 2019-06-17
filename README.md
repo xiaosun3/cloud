@@ -13,8 +13,9 @@ cloud-remote        --> nacos 配置中心
 
 
 
-actuator 模块可以访问 /actuator/refresh 可以刷新加了@RefreshScope 的 bean 
+actuator 监控模块可以访问 
 
+@RefreshScope 标识的bean 可以使用 refreshScope.refresh("beanName") 刷新bean
 
 
 
