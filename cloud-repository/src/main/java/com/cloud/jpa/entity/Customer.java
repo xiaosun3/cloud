@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @Data
 @Entity
-@Table(name = "index")
+@Table(name = "customer")
 public class Customer {
 
     @Id
@@ -20,6 +20,9 @@ public class Customer {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "nickname")
+    private String nickname;
 
     @Column(name = "card")
     private String card;

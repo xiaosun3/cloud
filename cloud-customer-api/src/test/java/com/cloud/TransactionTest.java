@@ -1,4 +1,4 @@
-package con.cloud;
+package com.cloud;
 
 import com.cloud.configuration.Application;
 import com.cloud.jpa.entity.Customer;
@@ -14,7 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
+
+import javax.transaction.Transactional;
 
 
 /**
@@ -39,7 +40,9 @@ public class TransactionTest {
     @Transactional
     public void test(){
         try {
-            customerService.saveCustomer(new Customer("孙海迪", "6"));
+            Customer customer = new Customer("孙海迪", "7");
+            customer.setNickname("7");
+            customerService.saveCustomer(customer);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("异常了1");

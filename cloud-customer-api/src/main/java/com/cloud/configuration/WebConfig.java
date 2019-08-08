@@ -1,5 +1,6 @@
 package com.cloud.configuration;
 
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 import java.util.List;
@@ -37,6 +39,19 @@ public class WebConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/webjars/");
     }
+
+//    @Bean
+//    public RequestMappingHandlerMapping requestMappingHandlerMapping() {
+//        Boolean isSandbox = "de".equals(getActiveProfile()) || "te".equals(getActiveProfile());
+//        RequestMappingHandlerMapping handlerMapping = new RequestMappingHandlerMapping();
+//        List<Object> interceptorList = Lists.newLinkedList();
+//        if (!"de".equals(getActiveProfile())) {
+////            interceptorList.add(new RequestTimeInterceptor(isSandbox));
+//        }
+//        handlerMapping.setInterceptors(interceptorList.toArray());
+//        return handlerMapping;
+//    }
+
     /**
      * 获取当前环境
      * @return

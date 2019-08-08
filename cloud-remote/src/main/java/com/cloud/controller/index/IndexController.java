@@ -22,7 +22,7 @@ public class IndexController {
 
     @RequestMapping(path = "nacos", method = RequestMethod.GET)
     public Object index() {
-        System.out.println("remote index success");
+        System.out.println(username);
         return username;
     }
 

@@ -1,11 +1,14 @@
 package com.cloud.configuration;
 
+import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.cloud.filters.RequestWrapperFilter;
 import com.cloud.servlet.MyServelet;
 import com.google.common.collect.ImmutableList;
 import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -18,6 +21,20 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 public class BeanFactory {
 
+    @NacosValue(value = "${username:abc}", autoRefreshed = true)
+    private String username;
+
+    /**
+     * @RefreshScope 标识的bean 可以使用 refreshScope.refresh("beanName") 刷新bean
+     * @return
+     */
+    @Bean("refreshDto")
+    @RefreshScope
+    public RefreshDto refreshDto() {
+        RefreshDto refreshDto = new RefreshDto();
+        refreshDto.setName(username);
+        return refreshDto;
+    }
 
     @Bean
     public RestTemplate restTemplate() {

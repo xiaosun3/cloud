@@ -1,4 +1,4 @@
-package con.cloud.sort;
+package com.cloud.sort;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

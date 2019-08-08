@@ -12,7 +12,7 @@
     <artifactId>cloud-gateway</artifactId>
     <dependencies>
         <!-- hystrix -->
-        <!-- 监控 比如bean加了@RefreshScope 访问/actuator/refresh 可以刷新bean -->
+        <!-- 监控 访问/actuator/beas 等地址 可以查看应用信息 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>

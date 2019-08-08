@@ -1,4 +1,4 @@
-package con.cloud.threadtest;
+package com.cloud.threadtest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,12 +36,12 @@ public class ThreadService {
     }
 
     public synchronized void syn2() {
-        System.out.println("syn1");
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("syn2");
     }
 
     private static String message = "hello";

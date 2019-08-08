@@ -7,7 +7,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 
 
 @Configuration
-@EnableElasticsearchRepositories(basePackages = "com.cloud.es.repository")
+@EnableElasticsearchRepositories(basePackages = "com.cloud.repository")
 public class ElasticsearchConfig {
 
     @Autowired

@@ -1,10 +1,14 @@
 package com.cloud.controller.index;
 
+import com.alibaba.nacos.api.config.annotation.NacosValue;
+import com.cloud.configuration.RefreshDto;
 import com.cloud.service.goods.GoodsService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.scope.refresh.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.WebAsyncTask;
 
@@ -17,16 +21,27 @@ import java.util.concurrent.TimeoutException;
 @RestController
 @RequestMapping(value = "/api")
 public class CustomerController {
-
     @Autowired
     GoodsService goodsService;
 //    @Autowired
 //    CustomerService customerService;
+    @Autowired
+    RefreshScope refreshScope;
+    @Autowired
+    RefreshDto refreshDto;
+    @NacosValue(value = "${username:abc}", autoRefreshed = true)
+    private String username;
 
-    @RequestMapping(path = "/index2", method = RequestMethod.GET)
-    public String index(){
-        System.out.println("index ");
-        return "index";
+    @RequestMapping(path = "/refreshBean", method = RequestMethod.GET)
+    public String refreshBean(@RequestParam(required = false) String name){
+        if(StringUtils.isNotBlank(name)){
+            refreshScope.refresh(name);
+        }else{
+            refreshScope.refreshAll();
+        }
+
+        System.out.println(String.format("befor:%s after:%s",username,refreshDto.getName()));
+        return "refreshBean";
     }
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)

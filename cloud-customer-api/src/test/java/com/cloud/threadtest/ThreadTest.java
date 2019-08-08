@@ -1,4 +1,4 @@
-package con.cloud.threadtest;
+package com.cloud.threadtest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,10 +37,15 @@ public class ThreadTest {
             service.syn2();
         }).start();
         new Thread(() -> {
-            service.syn2();
+            service.syn1();
         }).start();
 
+        while (true){
+
+        }
     }
 
-
+    public static void main(String[] args) {
+        System.out.println(String.valueOf(System.currentTimeMillis()));
+    }
 }

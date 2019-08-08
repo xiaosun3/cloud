@@ -1,11 +1,10 @@
-package con.cloud.threadtest;
+package com.cloud.threadtest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -20,19 +19,17 @@ public class ThreadPool {
     }
 
     @Test
-    public void testThreadJoin(){
-        ThreadTask task1 = new ThreadTask("task1");
-        ThreadTask task2 = new ThreadTask("task2");
-        Thread thread1 = new Thread(task1);
-        Thread thread2 = new Thread(task2);
-        thread1.start();
-        thread2.start();
-
-        try {
-            thread1.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public void testThreadJoin() throws InterruptedException {
+        System.out.println("main thread start");
+        for (int i = 0; i < 5; i++) {
+            Thread thread = new Thread(() -> {
+                System.out.println(Thread.currentThread().getName() + " start");
+            });
+            thread.start();
+            thread.join();
         }
+
+        System.out.println("main thread end");
     }
 
     /**
@@ -43,14 +40,14 @@ public class ThreadPool {
     public void testCallable(){
         ThreadPoolTaskExecutor poolExecutor = buildThreadPoolExecutor();
         Future<Integer> result = poolExecutor.submit(new ThreadTask.ThreadCallable());
-        poolExecutor.submit(() -> 222);
+        Future<Integer> result2 = poolExecutor.submit(() -> 222);
         poolExecutor.shutdown();
 
         System.out.println("主线程业务 start");
 
         try {
             //result.get() 会阻塞当前线程,等待子线程完成。
-            System.out.println("task运行结果" + result.get());
+            System.out.println("task运行结果" + result2.get());
         } catch (Exception e) {
             e.printStackTrace();
         }

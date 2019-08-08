@@ -1,4 +1,4 @@
-package con.cloud.redistest;
+package com.cloud.aop;
 
 import com.cloud.configuration.Application;
 import org.junit.Test;
@@ -10,18 +10,20 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * Created by sunhaidi on 2019-03-13.
+ * Created by sunhaidi on 2019-07-16.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("de")
-public class RedisTest {
-
+public class AopTest {
     @Autowired
-    public RedisTemplate<String, String> redisTemplate;
+    AopService aopService;
+
 
     @Test
-    public void save(){
-        redisTemplate.opsForValue().set("sunhd","123");
+    public void test(){
+        aopService.save();
+        aopService.select("shd");
     }
+
 }

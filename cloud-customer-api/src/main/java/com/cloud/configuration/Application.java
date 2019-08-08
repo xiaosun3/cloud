@@ -1,10 +1,12 @@
 package com.cloud.configuration;
 
+import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.context.scope.refresh.RefreshScope;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -16,6 +18,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 //@EnableApolloConfig()//配置中心 apollo 的注解
 @EnableHystrix  //启用 Hystrix
 @EnableHystrixDashboard //启用 Hystrix Dashboard，
+@NacosPropertySource(dataId = "customer_config", autoRefreshed = true, groupId = "DEFAULT_GROUP")
 //@EnableTurbine
 public class Application extends SpringBootServletInitializer {
 //    private static final Logger logger = LoggerFactory.getLogger(Application.class);
@@ -27,8 +30,8 @@ public class Application extends SpringBootServletInitializer {
     @Autowired
     AbstractApplicationContext c;
 
-//    @Autowired
-//    RefreshScope refreshScope;
+    @Autowired
+    RefreshScope refreshScope;
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

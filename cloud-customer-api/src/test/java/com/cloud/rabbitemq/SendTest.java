@@ -1,4 +1,4 @@
-package con.cloud.rabbitemq;
+package com.cloud.rabbitemq;
 
 import com.cloud.configuration.Application;
 import org.junit.Test;

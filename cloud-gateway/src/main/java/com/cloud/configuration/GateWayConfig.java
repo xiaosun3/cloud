@@ -3,6 +3,7 @@ package com.cloud.configuration;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.handler.predicate.PathRoutePredicateFactory;
 import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.GatewayFilterSpec;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -14,26 +15,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GateWayConfig {
 
-
-//    @Bean
-//    public RouteLocatorBuilder routeLocatorBuilder(ConfigurableApplicationContext context) {
-//        return new RouteLocatorBuilder(context);
-//    }
-
-//    @Bean
-//    public PathRoutePredicateFactory pathRoutePredicateFactory() {
-//        return new PathRoutePredicateFactory();
-//    }
-
     @Bean
     @RefreshScope
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("path_route", r -> r.path("**/api/**")
+                .route("cloud-api", r -> r.path("/cloud-api/**")
+                        .filters(f -> {
+                            f.addRequestHeader("headerName1", "headerValue1");
+                            f.redirect(300,"http://www.baidu.com");
+                            return f;
+                        })
                         .uri("http://127.0.0.1:8080"))
-                .route(p -> p
-                        .predicate(exchange -> exchange.getRequest().getPath().subPath(0).toString().startsWith(("/openhome/")))
-                        .filters(f -> f.rewritePath("/openhome/(?<remaining>.*)", "/${remaining}")).uri("https://openhome.cc"))
+
                 .build();
     }
 

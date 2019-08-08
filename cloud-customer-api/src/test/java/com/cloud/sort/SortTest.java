@@ -1,6 +1,7 @@
-package con.cloud.sort;
+package com.cloud.sort;
 
 /**
+ * https://www.cnblogs.com/onepixel/p/7674659.html
  * Created by sunhaidi on 2019-05-13.
  */
 //@RunWith(SpringRunner.class)
@@ -21,6 +22,8 @@ public class SortTest {
         binarySort();
 //        System.out.println("\n-------冒泡------");
 //        bubbleSort();
+        System.out.println("\n-------选择------");
+        selectionSort();
     }
 
     /**
@@ -61,6 +64,31 @@ public class SortTest {
         return arr;
     }
 
+    public static void ss(){
+
+
+    }
+
+    /**
+     * 插入排序（Insertion-Sort）的算法描述是一种简单直观的排序算法。它的工作原理是通过构建有序序列，
+     * 对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。
+     *
+     * @param arr
+     */
+    public static void insertionSort(int[] arr){
+        int len = arr.length;
+        int preIndex, current;
+        for (int i = 1; i < len; i++) {
+            preIndex = i - 1;
+            current = arr[i];
+            while (preIndex >= 0 && arr[preIndex] > current) {
+                arr[preIndex + 1] = arr[preIndex];
+                preIndex--;
+            }
+            arr[preIndex + 1] = current;
+        }
+    }
+
     /**
      * 冒泡排序
      * 两两比较，大者交换位置，则每一圈比较最大的数就会冒到最后，循环直至遍历完所有
@@ -78,6 +106,31 @@ public class SortTest {
             }
         }
 
+    }
+
+    /**
+     * 选择排序(Selection-sort)
+     * 是一种简单直观的排序算法。它的工作原理：首先在未排序序列中找到最小（大）元素，
+     * 存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。
+     * 以此类推，直到所有元素均排序完毕。
+     */
+    public static void selectionSort() {
+        int len = array.length;
+        int minIndex, temp;
+        for (int i = 0; i < len - 1; i++) {
+            minIndex = i;
+            for (int j = i + 1; j < len; j++) {
+                if (array[j] < array[minIndex]) {     // 寻找最小的数
+                    minIndex = j;                 // 将最小数的索引保存
+                }
+            }
+            temp = array[i];
+            array[i] = array[minIndex];
+            array[minIndex] = temp;
+        }
+        for (int i = 0; i < array.length; i++) {
+            System.out.print(array[i] + " ");
+        }
     }
 
 
@@ -139,5 +192,38 @@ public class SortTest {
             }
         }
         return -1;
+    }
+
+    /**
+     * 快速排序的基本思想：通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分的关键字小，
+     * 则可分别对这两部分记录继续进行排序，以达到整个序列有序。
+     * @return
+     */
+    public void quickSort(int array[], int top, int tail) {
+        if (top >= tail) {
+            return;
+        }
+        int left = top,
+            right = tail;
+        int temp = array[left];// 数组的第一作为中轴
+        while (left < right) {
+            while (left < right && array[right] >= temp) {
+                right--;
+            }
+            array[left] = array[right];// 比中轴小的记录移动到低端
+            while (left < right && array[left] < temp) {
+                left++;
+            }
+            array[right] = array[left];
+        }
+        if (left == right) {
+            array[left] = temp;
+        }
+        if (left != top) {
+            quickSort(array, 0, left - 1);
+        }
+        if (right != tail) {
+            quickSort(array, right + 1, array.length - 1);
+        }
     }
 }

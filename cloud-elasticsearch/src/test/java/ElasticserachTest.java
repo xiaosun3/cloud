@@ -1,3 +1,4 @@
+import com.alibaba.fastjson.JSON;
 import com.cloud.configuration.Application;
 import com.cloud.entity.GoodsInfo;
 import com.cloud.repository.GoodsInfoRepository;
@@ -6,9 +7,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sunhaidi on 2019-03-05.
@@ -20,8 +23,8 @@ public class ElasticserachTest {
 
     @Autowired
     private GoodsInfoRepository goodsInfoRepository;
-//    @Autowired
-//    ElasticsearchTemplate elasticsearchTemplate;
+    @Autowired
+    ElasticsearchTemplate elasticsearchTemplate;
 
     @Test
     public void saveIndex() {
@@ -41,7 +44,7 @@ public class ElasticserachTest {
 
         List l = Lists.newArrayList(goodsInfo1);
 
-        goodsInfoRepository.saveAll(l);
+//        goodsInfoRepository.saveAll(l);
     }
 
     @Test
@@ -63,7 +66,13 @@ public class ElasticserachTest {
     @Test
     public void updateIndex() {
         GoodsInfo goodsInfo = new GoodsInfo("", "", "");
-        goodsInfoRepository.save(goodsInfo);
+//        goodsInfoRepository.save(goodsInfo);
+    }
+
+    @Test
+    public void esTemplate() {
+        Map map =  elasticsearchTemplate.getMapping("goodsindex","goods");
+        System.out.println(JSON.toJSON(map));
     }
 
 
