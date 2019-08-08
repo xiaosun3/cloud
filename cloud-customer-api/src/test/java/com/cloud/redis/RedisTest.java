@@ -1,4 +1,4 @@
-package com.cloud.redistest;
+package com.cloud.redis;
 
 import com.cloud.configuration.Application;
 import org.junit.Test;
