@@ -63,7 +63,7 @@ public class JPAConfig {
 
     @Bean(name = "DataSource")
 //    @Profile("!build-test")
-    public DataSource dataSource() throws PropertyVetoException {
+    public DataSource dataSource() {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl(env.getProperty("mysql.connection.url"));

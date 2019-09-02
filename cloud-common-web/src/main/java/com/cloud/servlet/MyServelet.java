@@ -16,7 +16,7 @@ import java.io.PrintWriter;
  *  </dependency>
  */
 public class MyServelet extends HttpServlet {
-    String url = "http://127.0.0.1:8081/index";
+    String url = "http://127.0.0.1:8081/customer";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

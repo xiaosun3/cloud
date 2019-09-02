@@ -1,11 +1,25 @@
 package com.cloud;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Random;
+
 /**
  * Created by sunhaidi on 2019-07-29.
  */
 public class TempTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
+        for (int i = 0; i < 10; i++) {
+            System.out.println((int)(Math.random()*100));
+        }
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(format.parse("2019/2/24"));
+        System.out.println(format2.format(format.parse("2019/2/24")));
 
         System.out.println(Integer.toHexString(0x3f03));
         System.out.println(Integer.toBinaryString(0x3f03));
@@ -14,27 +28,9 @@ public class TempTest {
 
         System.out.println(System.currentTimeMillis());
 
-        int i = 0;
-        for (pri(i++),pri(++i); i < 6 && pri(i++) < 5; pri(++i)) {
-            pri(0);
-        }
-//        pri(++i);
-//        System.out.println(i);
-
-
-        switch (i){
-            case 3:
-                System.out.println(3);
-            return;
-
-        }
-
-        Integer o = null;
-        Integer o1 = o;
-        o = new Integer(3);
-        System.out.println(o == o1);
-        System.out.println(o);
-        System.out.println(o1);
+        String str = "https://61.50.129.55:8080/service/third/beijing/h5/login?authAppId=520ae017b33a43f7af20f3aaedfc2b93&redirect=http%3a%2f%2f218.80.250.99%2fchangping-user-te%2fstatic%2fhtml%2fcallapp.html%3ftoken%3d%7bcode%7d&state=1";
+        str= str.replace("h5/login","modifyUserinfo");
+        System.out.println(URLDecoder.decode(str));
 
     }
 

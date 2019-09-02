@@ -24,21 +24,32 @@ public class Customer {
     @Column(name = "nickname")
     private String nickname;
 
+    @Column(name = "sex")
+    private Integer sex;
+
+    @Column(name = "age")
+    private Integer age;
+
+    @Column(name = "birthday")
+    private Date birthday;
+
+    @Column(name = "channel")
+    private Integer channel;
+
     @Column(name = "card")
     private String card;
 
+    @Column(name = "card_type")
+    private Integer cardtype;
+
     @Column(name = "create_time")
     private Date createTime;
+
     @Column(name = "update_time")
     private Date updateTime;
 
     public Customer() {
 
-    }
-
-    public Customer(String name) {
-        this.name = name;
-        this.createTime = new Date();
     }
 
     public Customer( String name, String card) {
