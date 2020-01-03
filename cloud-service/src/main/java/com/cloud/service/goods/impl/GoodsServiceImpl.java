@@ -20,9 +20,10 @@ public class GoodsServiceImpl implements GoodsService {
     @Transactional
     public void save(Goods goods) {
         try {
-            goodsRepository.save(goods);
+//            goodsRepository.save(goods);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }

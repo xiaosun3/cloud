@@ -19,6 +19,7 @@
         <module>cloud-elasticsearch</module>
         <module>cloud-feign-consumer</module>
         <module>cloud-feign-provider</module>
+        <module>cloud-rocketmq</module>
     </modules>
 
     <properties>

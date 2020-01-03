@@ -1,41 +1,84 @@
 package com.cloud;
 
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by sunhaidi on 2019-07-29.
  */
 public class TempTest {
 
-    public static void main(String[] args) throws ParseException {
-        for (int i = 0; i < 10; i++) {
-            System.out.println((int)(Math.random()*100));
-        }
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-        SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println(format.parse("2019/2/24"));
-        System.out.println(format2.format(format.parse("2019/2/24")));
-
-        System.out.println(Integer.toHexString(0x3f03));
-        System.out.println(Integer.toBinaryString(0x3f03));
-
-        System.out.println(Integer.valueOf("3f03",16).toString());
-
+    public static void main(String[] args) throws ParseException, InterruptedException {
         System.out.println(System.currentTimeMillis());
 
-        String str = "https://61.50.129.55:8080/service/third/beijing/h5/login?authAppId=520ae017b33a43f7af20f3aaedfc2b93&redirect=http%3a%2f%2f218.80.250.99%2fchangping-user-te%2fstatic%2fhtml%2fcallapp.html%3ftoken%3d%7bcode%7d&state=1";
-        str= str.replace("h5/login","modifyUserinfo");
-        System.out.println(URLDecoder.decode(str));
+        ArrayList list = new ArrayList();
+        list.add("2_1");
+        list.add("2_2");
+        list.add("2_3");
+        list.add("2_4");
+        list.add("2_5");
+        list.add("2_1");
 
+        list.get(1);
+        LinkedList list2 = new LinkedList();
+        list2.add("");
+        list2.remove("");
+
+//        list.stream().filter()
+
+        System.out.println("main thread start");
+        AtomicInteger a = new AtomicInteger();
+        for (int i = 0; i < 1; i++) {
+            Thread thread = new Thread(() -> {
+                while (true){
+//                    a.getAndIncrement();
+//                    try {
+//                        System.out.println(Thread.currentThread().getName() + " sleep");
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+                }
+            });
+            thread.start();
+
+            System.out.println("主线程开始暂停");
+            Thread.sleep(1000);
+
+            System.out.println("主线程结束暂停");
+            System.out.println(thread.isInterrupted());
+            thread.interrupt();
+            System.out.println(thread.isInterrupted());
+//            System.out.println("waiting");
+        }
+
+        System.out.println("main thread end");
+
+
+
+    }
+
+    public String ss(){
+        for (int i = 0; i < 3; i++) {
+            System.out.println(i);
+            return  "1";
+        }
+        return "3";
     }
 
     public static int pri(int a){
         System.out.println(a);
         return a;
+    }
+
+    public static <T extends Tem<T>, E> List<T> splitBrandFile(T t, Class<T> clazz, String... fields) {
+
+
+        return null;
+    }
+
+    static class Tem<T>{
+
     }
 }

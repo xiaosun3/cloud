@@ -1,25 +1,20 @@
 package com.cloud;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.ImmutableMap;
+import lombok.Data;
 import org.junit.Test;
-import org.springframework.util.Assert;
-import sun.misc.BASE64Decoder;
-
-import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
  * Created by sunhaidi on 2019-03-13.
+ * 资料参考  https://juejin.im/post/5b6d801af265da0f926bb2a2
  */
 public class Testjdk8 {
 
@@ -28,7 +23,7 @@ public class Testjdk8 {
         List<String> list = Arrays.asList("A", "B", "C", "D");
 
         list.forEach((String s) -> {
-            System.out.println(s);
+//            System.out.println(s);
         });
 
         BiConsumer<Integer, String> b = (Integer x, String y) -> System.out.println(x + " : " + y);
@@ -42,16 +37,19 @@ public class Testjdk8 {
         Function<String, Integer> f1 = (String t) -> Integer.valueOf(t) * 10;
         System.out.println(f1.apply("3"));
 
+        int value = Stream.of(1, 2, 3, 4).reduce(100, (sum, item) -> sum + item);
+        System.out.println(value);
+
     }
 
     @Test
-    public void functionApply(){
-        int r = functionApply(2, integer -> integer -1);
+    public void functionApply() {
+        int r = functionApply(2, integer -> integer - 1);
         System.out.println(r);
     }
 
     @Test
-    public void consumerAccept(){
+    public void consumerAccept() {
         consumerAccept(3, (x) -> System.out.println(x * 2));
         consumerAccept(2, integer -> {
             System.out.println(integer * 2);
@@ -62,10 +60,12 @@ public class Testjdk8 {
      * Predicates
      */
     @Test
-    public void predicates(){
+    public void predicates() {
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         //输出大于5的数字
-        List<Integer> result = conditionFilter(list,integer -> {return false;});
+        List<Integer> result = conditionFilter(list, integer -> {
+            return false;
+        });
         result.forEach(System.out::println);
         System.out.println("-------");
         //输出大于等于5的数字
@@ -83,7 +83,7 @@ public class Testjdk8 {
     }
 
     //高度抽象的方法定义，复用性高
-    public static <T> List<T> conditionFilter(List<T> list, Predicate<T> predicate){
+    public static <T> List<T> conditionFilter(List<T> list, Predicate<T> predicate) {
         return list.stream().filter(predicate).collect(Collectors.toList());
     }
 
@@ -104,23 +104,120 @@ public class Testjdk8 {
     }
 
 
-    public static void main(String[] args) {
+    @Test
+    public void stream() {
+        List<Buss> bussList = new ArrayList<>();
+        bussList.add(new Buss("a", 10, 0.3));
+        bussList.add(new Buss("b", 3, 0.8));
+        bussList.add(new Buss("c", 5, 2.0));
+        bussList.add(new Buss("b", 30, 3.2));
+        bussList.add(new Buss("c", 20, 0.1));
 
-        String str = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body><ns2:getPtJySfqyResponse xmlns:ns2=\"http://com.wondersgroup.jkda.application.modules.webservice\"><ptJySfqy>{\"code\":\"1\",\"data\":{\"jzdz\":\"昌平区北企北企马池口村103号\",\"sfqy\":\"1\",\"team_id\":\"8\",\"team_inst_name\":\"马池口社区卫生服务站\",\"team_name\":\"武春兰家庭医生团队\",\"ysxxs\":[{\"doctor_code\":\"mckmckwcl\",\"doctor_name\":\"武春兰\",\"doctor_post\":\"团队长\",\"doctor_postitle\":\"执业医师\",\"doctor_type\":\"注册全科医生\",\"id_card\":\"110221197105211227\",\"inst_name\":\"马池口社区卫生服务站\"},{\"doctor_code\":\"mcklhj\",\"doctor_name\":\"李慧娟\",\"doctor_post\":\"社区护理\",\"doctor_postitle\":\"护师\",\"doctor_type\":\"社区护士\",\"id_card\":\"110226199003070540\",\"inst_name\":\"马池口社区卫生服务站\"},{\"doctor_code\":\"mckfbwj\",\"doctor_name\":\"王佳\",\"doctor_post\":\"社区公共卫生\",\"doctor_postitle\":\"公卫人员\",\"doctor_type\":\"社区防保人员\",\"id_card\":\"110221198711094627\",\"inst_name\":\"马池口社区卫生服务中心\"},{\"doctor_code\":\"mckzx\",\"doctor_name\":\"赵旭\",\"doctor_post\":\"药事\",\"doctor_postitle\":\"药师\",\"doctor_type\":\"药师\",\"id_card\":\"110106198702061832\",\"inst_name\":\"马池口社区卫生服务站\"},{\"doctor_code\":\"mckwcl\",\"doctor_name\":\"武春兰\",\"doctor_post\":\"其它\",\"doctor_postitle\":\"副主任医师\",\"doctor_type\":\"执业医师\",\"id_card\":\"110221197105211227\",\"inst_name\":\"马池口社区卫生服务中心\"},{\"doctor_code\":\"mckmckzj\",\"doctor_name\":\"周健\",\"doctor_post\":\"专科医生\",\"doctor_postitle\":\"执业医师\",\"doctor_type\":\"注册全科医生\",\"id_card\":\"110106198001030312\",\"inst_name\":\"马池口社区卫生服务站\"}]},\"msg\":\"患者已签约\"}</ptJySfqy></ns2:getPtJySfqyResponse></soap:Body></soap:Envelope>";
-        Pattern pattern = Pattern.compile("<ptJySfqy>(.*?)</ptJySfqy>");
-        Matcher match = pattern.matcher(str);
-        if(match.find()){
-            String json = match.group(1);
-            JSONObject object = JSON.parseObject(json);
-            String code = object.getString("code");
-            if("1".equals(code)){
-                String sfqy = object.getJSONObject("data").getString("sfqy");
-                System.out.println("sfqy:" + sfqy);
-            }
+        bussList.stream()
+                .collect(Collectors.groupingBy(Buss::getName)) //分组(Name can't be null)
+                .forEach((k, v) -> {
+                    Optional<Buss> sum = v.stream().reduce((v1, v2) -> {  //合并
+                        v1.setCount(v1.getCount() + v2.getCount());
+                        v1.setValue(v1.getValue() + v2.getValue());
+                        return v1;
+                    });
+                    System.out.println(sum);
+                    bussList.add(sum.orElse(new Buss("other", 0, 0.0)));
+
+                });
+//        st.forEach(buss -> {
+//            System.out.println(JSON.toJSON(buss));
+//        });
+
+        bussList.stream()
+                .collect(Collectors.groupingBy(Buss::getName)).forEach((s, busses) -> {
+            System.out.println(JSON.toJSON(s));
+            System.out.println(JSON.toJSON(busses));
+        });
+
+
+        List<Map<String, Object>> sublist = Arrays.asList(ImmutableMap.of("1","2"));
+
+
+        Map<String, Object> merged = sublist.stream()
+                .map(Map::entrySet)
+                .flatMap(Set::stream)
+                .distinct()
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    @Data
+    class Buss {
+
+        private String name;
+        private int count;
+        private double value;
+
+        public Buss(String name, int count, double value) {
+            this.name = name;
+            this.count = count;
+            this.value = value;
         }
+    }
+
+    @Test
+    public void stream1() {
+        List<Test1> test1s = new ArrayList<>();
+
+        Test1 test1_1 = new Test1();
+        test1_1.setName("test1_1");
+
+        List<Test2> test2_1 = new ArrayList<>();
+        test2_1.add(new Test2("test2.1", 1));
+        test2_1.add(new Test2("test2.2", 2));
+        test2_1.add(new Test2("test2.3", 3));
+
+        test1_1.setChilds(test2_1);
+
+        Test1 test1_2 = new Test1();
+        test1_2.setName("test1_2");
+
+        List<Test2> test2_2 = new ArrayList<>();
+        test2_2.add(new Test2("test2.1", 1));
+        test2_2.add(new Test2("test2.2", 2));
+        test2_2.add(new Test2("test2.3", 3));
+
+        test1_2.setChilds(test2_2);
+
+        test1s.add(test1_1);
+        test1s.add(test1_2);
+
+
+        test1s.stream().forEach(test11 -> {
+            List<Test2> test2List = test11.getChilds();
+            System.out.println("test1_name:" + test11.getName());
+            test2List.forEach(test2 -> {
+                System.out.println("test2_name:" + test2.getName());
+            });
+        });
+
+
+//        test1s.stream().forEach();
+
+
 
     }
 
 
+    @Data
+    class Test1 {
+        String name;
+        List<Test2> childs;
+    }
 
+    @Data
+    class Test2 {
+        String name;
+        Integer value;
+
+        public Test2(String name, Integer value) {
+            this.name = name;
+            this.value = value;
+        }
+    }
 }

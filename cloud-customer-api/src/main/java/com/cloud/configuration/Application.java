@@ -33,6 +33,12 @@ public class Application extends SpringBootServletInitializer {
     @Autowired
     RefreshScope refreshScope;
 
+    /**
+     * 如果需要 war 运行，就需要继承SpringBootServletInitializer
+     * 重写configure方法指定 Application类
+     * @param application
+     * @return
+     */
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Application.class);

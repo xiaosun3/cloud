@@ -23,6 +23,7 @@ public class GateWayConfig {
                         .filters(f -> {
                             f.addRequestHeader("headerName1", "headerValue1");
                             f.redirect(300,"http://www.baidu.com");
+
                             return f;
                         })
                         .uri("http://127.0.0.1:8080"))

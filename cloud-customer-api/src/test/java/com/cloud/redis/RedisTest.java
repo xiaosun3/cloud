@@ -2,6 +2,7 @@ package com.cloud.redis;
 
 import com.cloud.configuration.Application;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,10 @@ public class RedisTest {
         System.out.println(jedisCluster.get("sunhd"));
 
         System.out.println(redisTemplate.opsForValue().get("sunhd"));
+
+        while (true){
+
+        }
     }
 
     /**
@@ -97,7 +102,8 @@ public class RedisTest {
      */
     @Test
     public void pubTest(){
-        jedisCluster.publish("channelTest","channelTest msg");
+        Long l = jedisCluster.publish("channelTest","channelTest msg");
+        System.out.println("lll:" + l);
 
     }
 }

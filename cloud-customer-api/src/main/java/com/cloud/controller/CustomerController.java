@@ -23,7 +23,7 @@ import java.util.concurrent.TimeoutException;
 public class CustomerController {
     @Autowired
     GoodsService goodsService;
-//    @Autowired
+    //    @Autowired
 //    CustomerService customerService;
     @Autowired
     RefreshScope refreshScope;
@@ -34,31 +34,33 @@ public class CustomerController {
     private String username;
 
     @RequestMapping(path = "/refreshBean", method = RequestMethod.GET)
-    public String refreshBean(@RequestParam(required = false) String name){
-        if(StringUtils.isNotBlank(name)){
+    public String refreshBean(@RequestParam(required = false) String name) {
+        if (StringUtils.isNotBlank(name)) {
             refreshScope.refresh(name);
-        }else{
+        } else {
             refreshScope.refreshAll();
         }
-
-        System.out.println(String.format("befor:%s after:%s",username,refreshDto.getName()));
+        System.out.println();
+        System.out.println(String.format("befor:%s after:%s", username, refreshDto.getName()));
         return "refreshBean";
     }
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)
-    public String index(@RequestParam String userId){
+    public String index(@RequestParam String userId) {
+        //如果goodsService里面的方法有标注@Transactional 那么获取到的class就是代理类对象
+        System.out.println("goodsService class:" + goodsService.getClass());
         System.out.println("customer userId " + userId);
         return userId;
     }
 
     @RequestMapping(path = "/hystrixTest", method = RequestMethod.GET)
-    @HystrixCommand(fallbackMethod = "serviceFallback" ,commandProperties = {
+    @HystrixCommand(fallbackMethod = "serviceFallback", commandProperties = {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000")
     })
     public Object hystrixTest() {
 //            customerService.saveCustomer(new Customer("孙海迪", "1"));
         try {
-            Thread.sleep(RandomUtils.nextInt(500,1500));
+            Thread.sleep(RandomUtils.nextInt(500, 1500));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -68,7 +70,6 @@ public class CustomerController {
     public String serviceFallback(Throwable throwable) {
         return "error,Hystrix default value";
     }
-
 
 
     /**
@@ -84,7 +85,7 @@ public class CustomerController {
         WebAsyncTask<String> webAsyncTask = new WebAsyncTask<>(3000, new Callable<String>() {
 
             @Override
-            public String call()  {
+            public String call() {
                 System.out.println(Thread.currentThread().getName() + " 进入call方法");
                 String say = "sayHello";
                 System.out.println(Thread.currentThread().getName() + " 从helloService方法返回");

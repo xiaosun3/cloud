@@ -80,7 +80,7 @@ public class reflections {
             //getType()返回一个 Class 对象，它标识了此 Field 对象所表示字段的声明类型。
             System.out.println(f.getName() + "        " + f.getType());
 //            f.set(o, new String("孙海迪"));
-//            System.out.println("name2:"+f.get(o));
+//            System.out.println("name2:"+f.get(o));//获取字段的值
         }
         System.out.println("-----------------------显示类的方法------------------------------");
         //getDeclaredMethods() 返回一个 Method 对象，该对象反映此 Class 对象所表示的类或接口的指定已声明方法。
